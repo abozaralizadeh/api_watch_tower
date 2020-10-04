@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from .models import *
 from celery import shared_task
 from celery.task import periodic_task
-from datetime import timedelta
+from datetime import datetime, timedelta
 import requests
 import re
 import json
@@ -21,6 +21,12 @@ def check_health():
 
     for rule in rules:
         make_http_call.delay(rule.id)
+        
+        
+@shared_task
+def clean_record(days):
+    records = HealthCheckRecord.objects.filter(timestamp__gte=datetime.now()-timedelta(days=days))
+    records.delete()
 
 
 @shared_task
