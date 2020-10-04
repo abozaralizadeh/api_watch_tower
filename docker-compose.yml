@@ -23,10 +23,10 @@ services:
     command: redis-server
     ports:
       - '6379:6379'
-  web:
+  api_watch_tower_single:
     build: .
     restart: always
-    container_name: 'abozar_app_django'
+    container_name: 'api_watch_tower_single'
     command: bash -c 'python manage.py migrate && python manage.py runserver 0.0.0.0:8000'
 #    volumes:
 #      - .:/code
@@ -46,7 +46,7 @@ services:
     links:
       - redis
     depends_on:
-      - web
+      - api_watch_tower_single
       - redis
       - postgres
     environment:
@@ -62,7 +62,7 @@ services:
     links:
       - redis
     depends_on:
-      - web
+      - api_watch_tower_single
       - redis
       - celery
       - postgres

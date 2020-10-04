@@ -1,0 +1,9 @@
+#!/bin/bash
+sudo service ssh start &&
+sudo nginx &&
+sudo service grafana-server start &&
+service postgresql start &&
+service redis-server start &&
+(python manage.py runserver 0.0.0.0:8000 &
+celery -A ApiWatchTower worker -B --concurrency=10 &
+celery -A ApiWatchTower beat -l info -S django --pidfile=)

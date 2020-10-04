@@ -88,10 +88,10 @@ DATABASES = {
     },
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'AWT',
+        'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'postgres',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
@@ -134,7 +134,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # celery
 
-CELERY_BROKER_URL = 'redis://abozar_app_redis:6379'
+CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['json'] 
 CELERY_TASK_SERIALIZER = 'json'
 
@@ -152,3 +152,10 @@ AAD_USER_STATIC_MAPPING = { 'is_staff': True } #, 'is_superuser': True
 AAD_USER_MAPPING = { 'username': 'email', 'first_name': 'name' }
 AAD_GROUP_MAPPING = { 'admin':'admins', }
 AAD_GROUP_STATIC_MAPPING = {'members',}
+
+try:
+    HTTPS =  get_env_value('HTTPS')
+except:
+    HTTPS = 'off'
+
+
