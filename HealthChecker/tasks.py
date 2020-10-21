@@ -25,7 +25,7 @@ def check_health():
         
 @shared_task
 def clean_record(days):
-    records = HealthCheckRecord.objects.filter(timestamp__gte=datetime.now()-timedelta(days=days))
+    records = HealthCheckRecord.objects.filter(timestamp__lte=datetime.now()-timedelta(days=days))
     records.delete()
 
 
